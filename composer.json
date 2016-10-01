@@ -1,0 +1,35 @@
+{
+  "name": "lntn/VNPT_EPAY_client",
+  "type": "library",
+  "description": "PHP library to use VNPT Epay web service",
+  "keywords": [
+    "soap",
+    "vnpt",
+    "epay"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Le Nguyen Trung Nam",
+      "email": "me@namle.info",
+      "homepage": "http://www.namle.info",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Epay\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/TestCase.php"
+    ]
+  }
+}
