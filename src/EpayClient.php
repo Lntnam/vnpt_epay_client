@@ -89,15 +89,24 @@ class EpayClient
                 $this->options['PRIVATE_KEY'] = $options['PRIVATE_KEY'];
         }
 
-        $this->soapClient = new SoapClient(null, ['location' => $this->options['WS_URL'], 'uri' => $this->options['WS_URI']]);
+        ini_set('default_socket_timeout', 60);
+//        ini_set("soap.wsdl_cache_enabled", 0);
+
+        $this->soapClient = new SoapClient(null, [
+            'location'           => $this->options['WS_URL'],
+            'uri'                => $this->options['WS_URI'],
+            'connection_timeout' => 100,
+            'keep_alive'         => false,
+//            'cache_wsdl' => WSDL_CACHE_NONE,
+        ]);
     }
 
     /**
-     * @param $username
      * @param $password
      * @return LoginResponse
      * @throws CryptographyException
      * @throws \SoapFault
+     * @throws EpayException
      */
     public function login($password)
     {
@@ -118,6 +127,7 @@ class EpayClient
          * @throws \SoapFault
          */
         $result = $this->soapClient->login($this->username, $pass, $this->partnerID);
+        $this->soapClient->httpsocket = null;
         if ($result->status != 1) {
             throw new EpayException($result);
         }
@@ -145,6 +155,7 @@ class EpayClient
     {
         /** @var object $result */
         $result = $this->soapClient->logout($this->username, $this->partnerID, md5($this->sessionID));
+        $this->soapClient->httpsocket = null;
         if ($result->status == 3 || $result->status == 7) {
             throw new AuthenticationException($result);
         }
@@ -155,6 +166,18 @@ class EpayClient
         return new EpayResponse($result->status, $result->message);
     }
 
+    /**
+     * @param $transactionID
+     * @param $target
+     * @param $cardSerial
+     * @param $cardPin
+     * @param $cardProvider
+     * @return ChargingResponse
+     * @throws AuthenticationException
+     * @throws CryptographyException
+     * @throws EpayException
+     * @throws Exception
+     */
     public function chargeCard($transactionID, $target, $cardSerial, $cardPin, $cardProvider)
     {
         $cardData = $cardSerial . ":" . $cardPin . ":" . "0" . ":" . $cardProvider;
@@ -176,6 +199,8 @@ class EpayClient
 
         /** @var object $result */
         $result = $this->soapClient->cardCharging($transactionID, $this->username, $this->partnerID, $MPIN, $target, $cardData, md5($this->sessionID));
+        $this->soapClient->httpsocket = null;
+
         if ($result->status == 3 || $result->status == 7) {
             throw new AuthenticationException($result);
         }

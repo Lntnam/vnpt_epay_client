@@ -11,8 +11,8 @@ abstract class TestCase extends FrameworkTestCase
     protected function createClient()
     {
         return new EpayClient('charging01', 'charging01', '00477', 'pajwtlzcb', [
-            'EPAY_PUBLIC_KEY' => '/home/vagrant/Code/VNPT_EPAY_client/key/Epay_Public_key.pem',
-            'PRIVATE_KEY'     => '/home/vagrant/Code/VNPT_EPAY_client/key/private_key.pem',
+            'EPAY_PUBLIC_KEY' => __DIR__ . '/../key/Epay_Public_key.pem',
+            'PRIVATE_KEY'     => __DIR__ . '/../key/private_key.pem',
         ]);
     }
 }
