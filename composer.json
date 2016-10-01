@@ -1,5 +1,5 @@
 {
-  "name": "lntn/VNPT_EPAY_client",
+  "name": "lntn/vnpt_epay_client",
   "type": "library",
   "description": "PHP library to use VNPT Epay web service",
   "keywords": [
