@@ -1,5 +1,6 @@
 <?php
 use lntn\Epay\EpayClient;
+use lntn\Epay\Exceptions;
 use lntn\Epay\Responses;
 
 class EpayClientTest extends TestCase
@@ -49,7 +50,7 @@ class EpayClientTest extends TestCase
         $client->login($this->password);
 
         if ($status != 1) {
-            $this->expectException(\Epay\Exceptions\EpayException::class);
+            $this->expectException(Exceptions\EpayException::class);
         }
 
         $transactionID = date('Ymdhis');
