@@ -32,14 +32,14 @@ class EpayClient
     private $sessionID;
 
     private static $providers = [
-        'VNP' => 'Vinaphone',
-        'VMS' => 'Mobifone',
-        'VTT' => 'Viettel',
-        'FPT' => 'FPT',
+        'VNP'  => 'Vinaphone',
+        'VMS'  => 'Mobifone',
+        'VTT'  => 'Viettel',
+        'FPT'  => 'FPT',
         'ZING' => 'Zing',
-        'ONC' => 'Oncash',
-        'MGC' => 'Megacard',
-        'VNM' => 'VietNamMobile'
+        'ONC'  => 'Oncash',
+        'MGC'  => 'Megacard',
+        'VNM'  => 'VietNamMobile',
     ];
 
     /**
@@ -181,6 +181,8 @@ class EpayClient
         elseif ($result->status != 1) {
             throw new EpayException($result);
         }
+
+        $this->sessionID = null;
 
         return new EpayResponse($result->status, $result->message);
     }
