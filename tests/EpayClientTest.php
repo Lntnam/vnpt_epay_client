@@ -1,6 +1,6 @@
 <?php
-use Epay\EpayClient;
-use Epay\Responses;
+use lntn\Epay\EpayClient;
+use lntn\Epay\Responses;
 
 class EpayClientTest extends TestCase
 {

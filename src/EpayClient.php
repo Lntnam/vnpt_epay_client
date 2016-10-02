@@ -1,13 +1,13 @@
 <?php
-namespace Epay;
+namespace lntn\Epay;
 
-use Epay\Exceptions\AuthenticationException;
-use Epay\Exceptions\CryptographyException;
-use Epay\Exceptions\EpayException;
-use Epay\Responses\ChargingResponse;
-use Epay\Responses\EpayResponse;
-use Epay\Responses\LoginResponse;
 use Exception;
+use lntn\Epay\Exceptions\AuthenticationException;
+use lntn\Epay\Exceptions\CryptographyException;
+use lntn\Epay\Exceptions\EpayException;
+use lntn\Epay\Responses\ChargingResponse;
+use lntn\Epay\Responses\EpayResponse;
+use lntn\Epay\Responses\LoginResponse;
 use SoapClient;
 
 class EpayClient

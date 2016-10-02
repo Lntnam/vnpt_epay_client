@@ -1,7 +1,9 @@
 <?php
-namespace Epay\Exceptions;
+namespace lntn\Epay\Exceptions;
 
-class CryptographyException extends \Exception
+use Exception;
+
+class CryptographyException extends Exception
 {
 
     public function __construct($message, $code = 0, Exception $previous = null)

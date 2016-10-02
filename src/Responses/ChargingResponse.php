@@ -1,7 +1,5 @@
 <?php
-
-
-namespace Epay\Responses;
+namespace lntn\Epay\Responses;
 
 
 class ChargingResponse extends EpayResponse

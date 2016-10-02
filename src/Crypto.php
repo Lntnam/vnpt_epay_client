@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Epay;
+namespace lntn\Epay;
 
 
 class Crypto

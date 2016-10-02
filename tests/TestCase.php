@@ -1,6 +1,6 @@
 <?php
 
-use Epay\EpayClient;
+use lntn\Epay\EpayClient;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
 abstract class TestCase extends FrameworkTestCase

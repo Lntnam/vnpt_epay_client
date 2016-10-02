@@ -1,10 +1,11 @@
 <?php
 
 
-namespace Epay\Exceptions;
+namespace lntn\Epay\Exceptions;
 
+use Exception;
 
-class AuthenticationException extends \Exception
+class AuthenticationException extends Exception
 {
     public function __construct($result)
     {
