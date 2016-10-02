@@ -31,6 +31,17 @@ class EpayClient
     /* In Hex, call HexToByte to use it as cryptography key */
     private $sessionID;
 
+    private static $providers = [
+        'VNP' => 'Vinaphone',
+        'VMS' => 'Mobifone',
+        'VTT' => 'Viettel',
+        'FPT' => 'FPT',
+        'ZING' => 'Zing',
+        'ONC' => 'Oncash',
+        'MGC' => 'Megacard',
+        'VNM' => 'VietNamMobile'
+    ];
+
     /**
      * @return mixed
      */
@@ -61,6 +72,14 @@ class EpayClient
     public function setOptions($options)
     {
         $this->options = $options;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getProviders()
+    {
+        return self::$providers;
     }
 
     /**
