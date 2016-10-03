@@ -121,6 +121,8 @@ class EpayClient
     }
 
     /**
+     * Log into Epay web service, store session ID in the client instance.
+     *
      * @param $password
      * @return LoginResponse
      * @throws CryptographyException
