@@ -1,6 +1,6 @@
 # VNPT EPAY client library
 
-[![Build Status](https://travis-ci.org/lntn/VNPT_EPAY_client.svg?branch=master)](https://travis-ci.org/lntn/VNPT_EPAY_client)
+[![Build Status](https://travis-ci.org/lntn/vnpt_epay_client.svg?branch=master)](https://travis-ci.org/lntn/vnpt_epay_client)
 [![Latest Stable Version](https://poser.pugx.org/lntn/vnpt_epay_client/v/stable)](https://packagist.org/packages/lntn/vnpt_epay_client)
 [![Total Downloads](https://poser.pugx.org/lntn/vnpt_epay_client/downloads)](https://packagist.org/packages/lntn/vnpt_epay_client)
 [![License](https://poser.pugx.org/lntn/vnpt_epay_client/license)](https://packagist.org/packages/lntn/vnpt_epay_client)
