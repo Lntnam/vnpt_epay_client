@@ -25,7 +25,6 @@ class EpayClient
         'EPAY_PUBLIC_KEY' => '../key/Epay_Public_key.pem',
         'PRIVATE_KEY'     => '../key/private_key.pem',
     ];
-    private $soapClient;
     private $username;
 
     /* In Hex, call HexToByte to use it as cryptography key */
@@ -43,7 +42,7 @@ class EpayClient
     ];
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSessionID()
     {
@@ -51,7 +50,7 @@ class EpayClient
     }
 
     /**
-     * @param mixed $sessionID
+     * @param string $sessionID
      */
     public function setSessionID($sessionID)
     {
@@ -59,7 +58,7 @@ class EpayClient
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getOptions()
     {
@@ -67,7 +66,7 @@ class EpayClient
     }
 
     /**
-     * @param mixed $options
+     * @param array $options
      */
     public function setOptions($options)
     {
@@ -109,15 +108,6 @@ class EpayClient
         }
 
         ini_set('default_socket_timeout', 60);
-//        ini_set("soap.wsdl_cache_enabled", 0);
-
-        $this->soapClient = new SoapClient(null, [
-            'location'           => $this->options['WS_URL'],
-            'uri'                => $this->options['WS_URI'],
-            'connection_timeout' => 100,
-            'keep_alive'         => false,
-//            'cache_wsdl' => WSDL_CACHE_NONE,
-        ]);
     }
 
     /**
@@ -143,12 +133,20 @@ class EpayClient
         }
 
         $pass = base64_encode($encryptedPass);
+
+        $soapClient = new SoapClient(null, [
+            'location'           => $this->options['WS_URL'],
+            'uri'                => $this->options['WS_URI'],
+            'connection_timeout' => 100,
+            'keep_alive'         => false,
+        ]);
+
         /**
          * @var object $result
          * @throws \SoapFault
          */
-        $result = $this->soapClient->login($this->username, $pass, $this->partnerID);
-        $this->soapClient->httpsocket = null;
+        $result = $soapClient->login($this->username, $pass, $this->partnerID);
+        $soapClient->httpsocket = null;
         if ($result->status != 1) {
             throw new EpayException($result);
         }
@@ -174,9 +172,16 @@ class EpayClient
 
     public function logout()
     {
+        $soapClient = new SoapClient(null, [
+            'location'           => $this->options['WS_URL'],
+            'uri'                => $this->options['WS_URI'],
+            'connection_timeout' => 100,
+            'keep_alive'         => false,
+        ]);
+
         /** @var object $result */
-        $result = $this->soapClient->logout($this->username, $this->partnerID, md5($this->sessionID));
-        $this->soapClient->httpsocket = null;
+        $result = $soapClient->logout($this->username, $this->partnerID, md5($this->sessionID));
+        $soapClient->httpsocket = null;
         if ($result->status == 3 || $result->status == 7) {
             throw new AuthenticationException($result);
         }
@@ -220,9 +225,16 @@ class EpayClient
             throw new CryptographyException($ex->getMessage(), $ex->getCode(), $ex->getPrevious());
         }
 
+        $soapClient = new SoapClient(null, [
+            'location'           => $this->options['WS_URL'],
+            'uri'                => $this->options['WS_URI'],
+            'connection_timeout' => 100,
+            'keep_alive'         => false,
+        ]);
+
         /** @var object $result */
-        $result = $this->soapClient->cardCharging($transactionID, $this->username, $this->partnerID, $MPIN, $target, $cardData, md5($this->sessionID));
-        $this->soapClient->httpsocket = null;
+        $result = $soapClient->cardCharging($transactionID, $this->username, $this->partnerID, $MPIN, $target, $cardData, md5($this->sessionID));
+        $soapClient->httpsocket = null;
 
         if ($result->status == 3 || $result->status == 7) {
             throw new AuthenticationException($result);
